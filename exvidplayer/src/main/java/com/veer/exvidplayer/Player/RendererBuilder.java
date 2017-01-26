@@ -1,6 +1,6 @@
-package com.veer.exvidplayer.Utils;
+package com.veer.exvidplayer.Player;
 
-import com.veer.exvidplayer.ExVidPlayer;
+import com.veer.exvidplayer.Player.ExVidPlayer;
 
 public interface RendererBuilder {
   void buildRenderers(ExVidPlayer player);

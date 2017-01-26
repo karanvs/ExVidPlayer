@@ -1,4 +1,4 @@
-package com.veer.exvidplayer.Utils;
+package com.veer.exvidplayer.Player;
 
 import android.content.Context;
 import android.media.MediaCodec;
@@ -21,7 +21,6 @@ import com.google.android.exoplayer.upstream.DefaultAllocator;
 import com.google.android.exoplayer.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer.upstream.DefaultUriDataSource;
 import com.google.android.exoplayer.util.ManifestFetcher;
-import com.veer.exvidplayer.ExVidPlayer;
 import java.io.IOException;
 
 /**

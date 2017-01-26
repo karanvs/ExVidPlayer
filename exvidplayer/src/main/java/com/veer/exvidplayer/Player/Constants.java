@@ -1,4 +1,4 @@
-package com.veer.exvidplayer.Utils;
+package com.veer.exvidplayer.Player;
 
 public interface Constants {
   String MEDIA_TYPE_DASH = "dash";
