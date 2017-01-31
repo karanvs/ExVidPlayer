@@ -19,7 +19,7 @@ abstract public class GestureListener implements View.OnTouchListener,IGestureLi
   }
 
   public boolean onTouch(final View view, final MotionEvent motionEvent) {
-    return gestureDetector.onTouchEvent(motionEvent);
+   return gestureDetector.onTouchEvent(motionEvent);
   }
 
   private final class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
@@ -47,10 +47,11 @@ abstract public class GestureListener implements View.OnTouchListener,IGestureLi
       return false;
     }
 
-    @Override public boolean onDoubleTap(MotionEvent e) {
-      onDoubleTap(e);
+    @Override public boolean onSingleTapUp(MotionEvent e) {
+      onTap();
       return false;
     }
+
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {

@@ -28,7 +28,7 @@ public class ExtractorRendererBuilder implements RendererBuilder {
     this.userAgent = userAgent;
     this.uri = uri;
   }
-  @Override public void buildRenderers(ExVidPlayer player) {
+  @Override public void buildRenderers(ExVidPlayerImp player) {
     Allocator allocator = new DefaultAllocator(BUFFER_SEGMENT_SIZE);
     Handler mainHandler = player.getMainHandler();
 
@@ -42,9 +42,9 @@ public class ExtractorRendererBuilder implements RendererBuilder {
     MediaCodecAudioTrackRenderer
         audioRenderer = new MediaCodecAudioTrackRenderer(sampleSource, MediaCodecSelector.DEFAULT,null,true);
     // Invoke the callback.
-    TrackRenderer[] renderers = new TrackRenderer[ExVidPlayer.RENDERER_COUNT];
-    renderers[ExVidPlayer.TYPE_VIDEO] = videoRenderer;
-    renderers[ExVidPlayer.TYPE_AUDIO] = audioRenderer;
+    TrackRenderer[] renderers = new TrackRenderer[ExVidPlayerImp.RENDERER_COUNT];
+    renderers[ExVidPlayerImp.TYPE_VIDEO] = videoRenderer;
+    renderers[ExVidPlayerImp.TYPE_AUDIO] = audioRenderer;
     player.onRenderers(renderers, bandwidthMeter);
   }
 

@@ -7,7 +7,7 @@ import android.view.MotionEvent;
  */
 
 public interface IGestureListener {
-  void onDoubleTap();
+  void onTap();
 
   void onHorizontalScroll(MotionEvent event, float delta);
 
@@ -20,4 +20,5 @@ public interface IGestureListener {
   void onSwipeBottom();
 
   void onSwipeTop();
+
 }

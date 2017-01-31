@@ -1,1 +1,1 @@
-include ':app', ':exvidplayer'
+include ':app', ':exvidplayer', ':exvidplayerfragment'

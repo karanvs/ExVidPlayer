@@ -42,7 +42,7 @@ public class HlsRendererBuilder implements RendererBuilder {
     this.userAgent = userAgent;
     this.url = video_url;
   }
-  @Override public void buildRenderers(ExVidPlayer player) {
+  @Override public void buildRenderers(ExVidPlayerImp player) {
     currentAsyncBuilder = new AsyncRendererBuilder(context, userAgent, url, player);
     currentAsyncBuilder.init();
   }
@@ -57,10 +57,10 @@ public class HlsRendererBuilder implements RendererBuilder {
     private final Context context;
     private final String userAgent;
     private final String url;
-    private final ExVidPlayer player;
+    private final ExVidPlayerImp player;
     private final ManifestFetcher<HlsPlaylist> playlistFetcher;
     private boolean canceled;
-    public AsyncRendererBuilder(Context context, String userAgent, String url, ExVidPlayer player) {
+    public AsyncRendererBuilder(Context context, String userAgent, String url, ExVidPlayerImp player) {
       this.context = context;
       this.userAgent = userAgent;
       this.url = url;
@@ -108,7 +108,7 @@ public class HlsRendererBuilder implements RendererBuilder {
           DefaultHlsTrackSelector.newDefaultInstance(context), bandwidthMeter,
           timestampAdjusterProvider, HlsChunkSource.ADAPTIVE_MODE_SPLICE);
       HlsSampleSource sampleSource = new HlsSampleSource(chunkSource, loadControl,
-          MAIN_BUFFER_SEGMENTS * BUFFER_SEGMENT_SIZE, mainHandler, player, ExVidPlayer.TYPE_VIDEO);
+          MAIN_BUFFER_SEGMENTS * BUFFER_SEGMENT_SIZE, mainHandler, player, ExVidPlayerImp.TYPE_VIDEO);
       MediaCodecVideoTrackRenderer
           videoRenderer = new MediaCodecVideoTrackRenderer(context, sampleSource,
           MediaCodecSelector.DEFAULT, MediaCodec.VIDEO_SCALING_MODE_SCALE_TO_FIT);
