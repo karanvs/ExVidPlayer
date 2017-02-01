@@ -126,7 +126,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/hplib_volume"
         android:id="@+id/volIcon"/>
-    <com.veer.exvidplayerfragment.Utils.VolBar
+    <com.veer.exvidplayer.Utils.VolBar
         style="@android:style/Widget.ProgressBar.Horizontal"
         android:layout_width="10dp"
         android:layout_height="match_parent"

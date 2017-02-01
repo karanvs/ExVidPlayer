@@ -1,4 +1,4 @@
-package com.veer.exvidplayerfragment.Utils;
+package com.veer.exvidplayer.Utils;
 
 import android.content.ContentResolver;
 import android.content.Context;

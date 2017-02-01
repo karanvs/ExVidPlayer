@@ -7,10 +7,4 @@
     android:background="#000000"
     android:keepScreenOn="true">
 
-  <fragment
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:name="com.veer.exvidplayerfragment.VideoPlayer.VideoPlayerFragment"
-      />
-
 </FrameLayout>

@@ -1,4 +1,4 @@
-package com.veer.exvidplayerfragment.VideoPlayer;
+package com.veer.exvidplayer.VideoPlayer;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -20,9 +20,9 @@ import com.veer.exvidplayer.Gestures.GestureListener;
 import com.veer.exvidplayer.Player.Constants;
 import com.veer.exvidplayer.Player.ExVidPlayer;
 import com.veer.exvidplayer.Player.ExVidPlayerListener;
-import com.veer.exvidplayerfragment.R;
+import com.veer.exvidplayer.R;
 import java.util.concurrent.TimeUnit;
-import com.veer.exvidplayerfragment.Utils.*;
+import com.veer.exvidplayer.Utils.*;
 /**
  * Created by Brajendr on 1/26/2017.
  */
@@ -58,6 +58,10 @@ public class VideoPlayerFragment extends Fragment {
   };
   private Handler mainHandler;
 
+  @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setRetainInstance(true);
+  }
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -155,8 +159,8 @@ public class VideoPlayerFragment extends Fragment {
   }
 
   @Override public void onDestroy() {
-    if (exVidPlayer != null) exVidPlayer.release();
-    super.onDestroy();
+      if (exVidPlayer != null) exVidPlayer.release();
+      super.onDestroy();
   }
 
   private void initViews() {
@@ -272,11 +276,18 @@ public class VideoPlayerFragment extends Fragment {
     }
 
     @Override public void onHorizontalScroll(MotionEvent event, float delta) {
-      updateVolumeProgressBar(-delta);
+
     }
 
     @Override public void onVerticalScroll(MotionEvent event, float delta) {
-      updateBrightnessProgressBar(-delta);
+
+      if(event.getPointerCount()==ONE_FINGER) {
+        updateBrightnessProgressBar(extractVerticalDeltaScale(-delta,pBarBrighness));
+      }
+      else
+      {
+        updateVolumeProgressBar(extractVerticalDeltaScale(-delta,pBarVolume));
+      }
 
     }
 
@@ -333,8 +344,6 @@ public class VideoPlayerFragment extends Fragment {
   private void updateBrightnessProgressBar(float v) {
     brightnessSlider.setVisibility(View.VISIBLE);
     brightnessCenterText.setVisibility(View.VISIBLE);
-    int bfactor=(int) v*((255-pBarBrighness.getProgress())/255);
-    int brighness=BrightnessUtils.get(getActivity())+bfactor;
 
     if (v < BrightnessUtils.MIN_BRIGHTNESS) {
       v = BrightnessUtils.MIN_BRIGHTNESS;
@@ -368,8 +377,7 @@ public class VideoPlayerFragment extends Fragment {
     int max=pBarVolume.getMax();
     volumeSlider.setVisibility(View.VISIBLE);
     volumeCenterText.setVisibility(View.VISIBLE);
-    int bfactor=(int) v*((max-pBarVolume.getProgress())/max);
-    int vol=pBarVolume.getProgress() +bfactor;
+    int vol=(int)(v);
     if (vol < 0) {
       vol = 0;
     } else if (vol > max) {
@@ -394,5 +402,27 @@ public class VideoPlayerFragment extends Fragment {
       }
     },2000);
 
+  }
+
+
+  private int extractVerticalDeltaScale(float deltaY, ProgressBar progressBar) {
+    return extractDeltaScale(progressBar.getHeight(), deltaY, progressBar);
+  }
+
+  private int extractDeltaScale(int availableSpace, float deltaX, ProgressBar progressBar) {
+    int x = (int) deltaX;
+    float scale;
+    float progress = progressBar.getProgress();
+    final int max = progressBar.getMax();
+
+    if (x < 0) {
+      scale = (float) (x) / (float) (max - availableSpace);
+      progress = progress - (scale * progress);
+    } else {
+      scale = (float) (x) / (float) availableSpace;
+      progress += scale * max;
+    }
+
+    return (int) progress;
   }
 }
