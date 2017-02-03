@@ -1,12 +1,15 @@
 package com.veer.exvidplayersample;
 
+import android.content.res.Configuration;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.veer.exvidplayer.Player.Constants;
@@ -16,10 +19,13 @@ import com.veer.exvidplayer.VideoPlayer.ExVpListener;
 
 public class CustomControlsActivity extends AppCompatActivity {
   String[] video_url = new String[] {
-      "http://playertest.longtailvideo.com/adaptive/bbbfull/bbbfull.m3u8",
+
+      "http://cfvod.kaltura.com/pd/p/1588381/sp/158838100/serveFlavor/entryId/0_23g1ysp4/v/2/flavorId/0_9w7gdeo3/name/a.mp4"
+      ,"http://playertest.longtailvideo.com/adaptive/bbbfull/bbbfull.m3u8",
       "http://cdnapi.kaltura.com/p/1878761/sp/187876100/playManifest/entryId/1_usagz19w/flavorIds/1_5spqkazq,1_nslowvhp,1_boih5aji,1_qahc37ag/format/applehttp/protocol/http/a.m3u8"
   };
   String[] video_type = new String[] {
+      Constants.MEDIA_TYPE_OTHERS,
       Constants.MEDIA_TYPE_HLS, Constants.MEDIA_TYPE_HLS
   };
   //controls
@@ -28,12 +34,26 @@ public class CustomControlsActivity extends AppCompatActivity {
   private SeekBar mProgress;
   private TextView tvCurrent, tvTotal;
   private ExVpListener exVpControls;
+  private FrameLayout frameLayout;
+  private RelativeLayout relativeLayout;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_simple_player);
     init();
     setUpPlayer();
+  }
+
+  @Override public void onConfigurationChanged(Configuration newConfig) {
+    super.onConfigurationChanged(newConfig);
+    if(newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE)
+    {
+     relativeLayout.setVisibility(View.GONE);
+    }
+    else
+    {
+      relativeLayout.setVisibility(View.VISIBLE);
+    }
   }
 
   private void setUpControls() {
@@ -100,6 +120,8 @@ public class CustomControlsActivity extends AppCompatActivity {
     mProgress = (SeekBar) findViewById(com.veer.exvidplayer.R.id.seekbar);
     tvCurrent = (TextView) findViewById(com.veer.exvidplayer.R.id.txt_currentTime);
     tvTotal = (TextView) findViewById(com.veer.exvidplayer.R.id.txt_totalDuration);
+    frameLayout=(FrameLayout)findViewById(R.id.parent);
+    relativeLayout=(RelativeLayout)findViewById(R.id.changeLayout);
   }
 
 }

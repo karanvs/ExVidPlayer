@@ -1,16 +1,21 @@
 package com.veer.exvidplayer.Player;
 
 import android.app.Activity;
+import android.media.MediaCodec;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Surface;
 import android.view.SurfaceView;
 import android.view.View;
-import com.google.android.exoplayer.AspectRatioFrameLayout;
+
 import com.google.android.exoplayer.DummyTrackRenderer;
 import com.google.android.exoplayer.ExoPlayer;
+import com.google.android.exoplayer.MediaCodecTrackRenderer;
 import com.google.android.exoplayer.MediaCodecVideoTrackRenderer;
 import com.google.android.exoplayer.MediaFormat;
 import com.google.android.exoplayer.TrackRenderer;
@@ -20,6 +25,7 @@ import com.google.android.exoplayer.upstream.BandwidthMeter;
 import com.google.android.exoplayer.util.MimeTypes;
 import com.google.android.exoplayer.util.PlayerControl;
 import com.google.android.exoplayer.util.Util;
+import com.google.android.exoplayer.AspectRatioFrameLayout;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -28,7 +34,7 @@ import java.util.concurrent.TimeUnit;
  * Created by Brajendr on 1/26/2017.
  */
 
-final class ExVidPlayerImp implements HlsSampleSource.EventListener, ExVidPlayer {
+final class ExVidPlayerImp implements HlsSampleSource.EventListener,ExVidPlayer {
   private static final String TAG = "ExVidPlayerImp";
 
   public static final int RENDERER_COUNT = 2;
@@ -76,11 +82,22 @@ final class ExVidPlayerImp implements HlsSampleSource.EventListener, ExVidPlayer
     player.seekTo(duration);
   }
 
+  @Override public void setAspectRatio(float ratio) {
+    aspectRatioFrameLayout.setAspectRatio(ratio);
+  }
+
+  public ExVidPlayerImp(Activity activity, SurfaceView surface, Handler handler,AspectRatioFrameLayout aspectRatioFrameLayout) {
+    this.activity = activity;
+    this.surface = surface;
+    this.aspectRatioFrameLayout=aspectRatioFrameLayout;
+    this.mainHandler = handler;
+  }
+
   public ExVidPlayerImp(Activity activity, SurfaceView surface, Handler handler) {
     this.activity = activity;
     this.surface = surface;
+    this.aspectRatioFrameLayout=aspectRatioFrameLayout;
     this.mainHandler = handler;
-    this.aspectRatioFrameLayout = aspectRatioFrameLayout;
   }
 
   private void initPlayer() {
@@ -297,5 +314,6 @@ final class ExVidPlayerImp implements HlsSampleSource.EventListener, ExVidPlayer
       long mediaTimeMs) {
 
   }
+
 }
 

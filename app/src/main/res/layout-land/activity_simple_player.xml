@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_simple_player"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context="com.veer.exvidplayersample.CustomControlsActivity"
     >
@@ -12,15 +11,12 @@
       android:id="@+id/bestlayout"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:layout_weight="1"
       >
     <FrameLayout
         android:id="@+id/parent"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="#000000"
-        android:layout_centerInParent="true"
-        android:foregroundGravity="center"
         android:keepScreenOn="true"
         >
 
@@ -176,19 +172,17 @@
   <RelativeLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:layout_weight="2"
-      android:id="@+id/changeLayout"
       android:layout_below="@+id/bestlayout"
+      android:visibility="gone"
       >
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="Rotate your device to get full screen,
-        with continous playback"
+        android:text="Rotate your device to get full screen!!"
         android:textColor="@color/white"
         />
   </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>

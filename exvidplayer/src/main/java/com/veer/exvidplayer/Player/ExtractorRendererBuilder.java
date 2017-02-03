@@ -4,8 +4,10 @@ import android.content.Context;
 import android.media.MediaCodec;
 import android.net.Uri;
 import android.os.Handler;
+import android.view.Surface;
 import com.google.android.exoplayer.MediaCodecAudioTrackRenderer;
 import com.google.android.exoplayer.MediaCodecSelector;
+import com.google.android.exoplayer.MediaCodecTrackRenderer;
 import com.google.android.exoplayer.MediaCodecVideoTrackRenderer;
 import com.google.android.exoplayer.TrackRenderer;
 import com.google.android.exoplayer.extractor.ExtractorSampleSource;
@@ -28,7 +30,7 @@ public class ExtractorRendererBuilder implements RendererBuilder {
     this.userAgent = userAgent;
     this.uri = uri;
   }
-  @Override public void buildRenderers(ExVidPlayerImp player) {
+  @Override public void buildRenderers(final ExVidPlayerImp player) {
     Allocator allocator = new DefaultAllocator(BUFFER_SEGMENT_SIZE);
     Handler mainHandler = player.getMainHandler();
 
@@ -38,7 +40,36 @@ public class ExtractorRendererBuilder implements RendererBuilder {
     ExtractorSampleSource sampleSource = new ExtractorSampleSource(uri, dataSource, allocator,
         BUFFER_SEGMENT_COUNT * BUFFER_SEGMENT_SIZE);
     MediaCodecVideoTrackRenderer videoRenderer = new MediaCodecVideoTrackRenderer(context,
-        sampleSource, MediaCodecSelector.DEFAULT, MediaCodec.VIDEO_SCALING_MODE_SCALE_TO_FIT, 5000);
+        sampleSource, MediaCodecSelector.DEFAULT, MediaCodec.VIDEO_SCALING_MODE_SCALE_TO_FIT, 5000,
+        mainHandler, new MediaCodecVideoTrackRenderer.EventListener() {
+      @Override public void onDroppedFrames(int count, long elapsed) {
+
+      }
+
+      @Override public void onVideoSizeChanged(int width, int height, int unappliedRotationDegrees,
+          float pixelWidthHeightRatio) {
+        player.setAspectRatio(
+            height == 0 ? 1 : (width * pixelWidthHeightRatio) / height);
+      }
+
+      @Override public void onDrawnToSurface(Surface surface) {
+
+      }
+
+      @Override public void onDecoderInitializationError(
+          MediaCodecTrackRenderer.DecoderInitializationException e) {
+
+      }
+
+      @Override public void onCryptoError(MediaCodec.CryptoException e) {
+
+      }
+
+      @Override public void onDecoderInitialized(String decoderName, long elapsedRealtimeMs,
+          long initializationDurationMs) {
+
+      }
+    },-1);
     MediaCodecAudioTrackRenderer
         audioRenderer = new MediaCodecAudioTrackRenderer(sampleSource, MediaCodecSelector.DEFAULT,null,true);
     // Invoke the callback.

@@ -9,14 +9,21 @@
       android:layout_width="fill_parent"
       android:layout_height="fill_parent"
       android:layout_gravity="center"
+      android:gravity="center"
+      android:layout_centerInParent="true"
       android:visibility="visible"
       android:foregroundGravity="center">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
     <SurfaceView android:id="@+id/surface_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_centerInParent="true"
         android:layout_gravity="center"/>
-
+    </RelativeLayout>
   </com.google.android.exoplayer.AspectRatioFrameLayout>
 
   <ProgressBar
@@ -168,155 +175,6 @@
         android:textColor="#ffffff" />
 
   </LinearLayout>
-
-
-  <LinearLayout
-      android:orientation="vertical"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_alignParentBottom="true"
-      android:visibility="visible"
-      android:id="@+id/root">
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:id="@+id/seekbar_time"
-        android:gravity="center"
-        android:background="#96000000"
-        android:visibility="visible">
-
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:textAppearance="?android:attr/textAppearanceSmall"
-          android:text="00:00:00"
-          android:id="@+id/txt_currentTime"
-          android:textColor="#FFF"
-          android:paddingLeft="20dp"
-          android:paddingTop="10dp"
-          android:paddingRight="10dp"
-          android:paddingBottom="10dp" />
-
-      <SeekBar
-          android:layout_width="fill_parent"
-          android:layout_height="wrap_content"
-          android:id="@+id/seekbar"
-          android:layout_weight="1"/>
-      <!--android:indeterminate="false"
-      style="@android:style/Widget.DeviceDefault.Light.SeekBar"
-      android:thumbTint="#ffffff"
-      android:progress="0"
-      android:secondaryProgress="0"
-      android:splitTrack="false"
-      android:progressTint="#2473ac"
-      android:secondaryProgressTint="#9A8486"
-      android:foregroundTint="#7F5C62"
-      android:foreground="#7F5C62" />-->
-
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:textAppearance="?android:attr/textAppearanceSmall"
-          android:text="00:00:00"
-          android:id="@+id/txt_totalDuration"
-          android:textColor="#FFF"
-          android:paddingLeft="10dp"
-          android:paddingTop="10dp"
-          android:paddingBottom="10dp"
-          android:paddingRight="20dp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:id="@+id/controls"
-        android:paddingBottom="10dp"
-        android:layout_gravity="center"
-        android:background="#96000000"
-        android:visibility="visible">
-
-      <ImageButton
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:id="@+id/btn_lock"
-          android:layout_gravity="right|center_vertical"
-          android:background="@android:color/transparent"
-          android:layout_weight="1"
-          android:src="@drawable/ic_lock_white_24dp"
-          android:layout_marginLeft="20dp" />
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_prev"
-            android:layout_gravity="center"
-            android:background="@android:color/transparent"
-            android:layout_weight="1"
-            android:src="@drawable/ic_skip_previous_white_24dp"
-            android:cropToPadding="false"
-            />
-
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:layout_gravity="center"
-            android:id="@+id/btn_rev"
-            android:layout_weight="1"
-            android:src="@drawable/ic_fast_rewind_white_24dp"
-            />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_play_circle_filled_white_white_24dp"
-            android:layout_gravity="center"
-            android:id="@+id/btn_pause"
-            android:layout_weight="1"
-            />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="+30s"
-            android:background="@android:color/transparent"
-            android:layout_gravity="center"
-            android:id="@+id/btn_fwd"
-            android:layout_weight="1"
-            android:src="@drawable/ic_fast_forward_white_24dp"
-           />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn_next"
-            android:layout_gravity="center"
-            android:background="@android:color/transparent"
-            android:layout_weight="1"
-            android:src="@drawable/ic_skip_next_white_24dp" />
-
-      <ImageButton
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="Settings"
-          android:background="@android:color/transparent"
-          android:layout_gravity="right|center_vertical"
-          android:id="@+id/btn_settings"
-          android:layout_weight="1"
-          android:src="@drawable/ic_switch_video_white_24dp"
-          android:foregroundGravity="right"
-          android:layout_marginRight="20dp" />
-
-
-    </LinearLayout>
-
-  </LinearLayout>
-
 
 
 </RelativeLayout>

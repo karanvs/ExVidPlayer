@@ -10,7 +10,6 @@ import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -29,22 +28,25 @@ import com.veer.exvidplayer.Utils.*;
  * Created by Brajendr on 1/26/2017.
  */
 
-public class ExVpCompleteFragment extends Fragment {
+public class ExVpFragment extends Fragment {
   private View mView;
   private ProgressBar progressBar;
   private SurfaceView surfaceView;
   private ExVidPlayer exVidPlayer;
-  //controls
-  private LinearLayout root, prgCenterText;
-  private ImageButton ivLock, ivNext, ivPrev, ivForword, ivRev, ivPlayPause, ivSetting;
-  private SeekBar mProgress;
-  private TextView tvCurrent, tvTotal, tvCenterCurrent, tvCenterProg;
-  private AspectRatioFrameLayout aspectRatioFrameLayout;
   //brightness
   private LinearLayout brightnessSlider, brightnessCenterText;
   private ImageView ivBrightness, ivBrightnessImage;
   private ProgressBar pBarBrighness;
   private TextView tvBrightnessPercent;
+  private AspectRatioFrameLayout aspectRatioFrameLayout;
+
+  //controls
+  private ViewGroup root;
+  private SeekBar mProgress;
+  private TextView tvCurrent, tvTotal;
+
+  private LinearLayout prgCenterText;
+  private TextView tvCenterCurrent, tvCenterProg;
   //volume
   private LinearLayout volumeSlider, volumeCenterText;
   private ImageView ivVolume, ivVolumeImage;
@@ -56,21 +58,86 @@ public class ExVpCompleteFragment extends Fragment {
   String[] video_type;
   private Handler mainHandler;
 
+  public ExVpListener getExVpListener() {
+    return exVpListener;
+  }
+
+  private ExVpListener exVpListener = new ExVpListener() {
+    @Override public void setControlLayout(ViewGroup viewGroup) {
+      root = viewGroup;
+    }
+
+    @Override public void play() {
+      if (exVidPlayer != null) {
+        exVidPlayer.play();
+      }
+    }
+
+    @Override public void stop() {
+      if (exVidPlayer != null) {
+        exVidPlayer.pause();
+      }
+    }
+
+    @Override public void forward() {
+      if (exVidPlayer != null) {
+        goForward();
+      }
+    }
+
+    @Override public void reverse() {
+      if (exVidPlayer != null) {
+        goReverse();
+      }
+    }
+
+    @Override public void nextTrack() {
+      if (exVidPlayer != null) {
+        exVidPlayer.nextTrack();
+      }
+    }
+
+    @Override public void previousTrack() {
+      if (exVidPlayer != null) {
+        exVidPlayer.previousTrack();
+      }
+    }
+
+    @Override public void setProgressBar(SeekBar seekBar) {
+      mProgress = seekBar;
+    }
+
+    @Override public void setDurationText(TextView textView) {
+      tvTotal = textView;
+    }
+
+    @Override public void setCurrentText(TextView textView) {
+      tvCurrent = textView;
+    }
+
+    @Override public void changeQuality(View v) {
+      if (exVidPlayer != null) {
+        exVidPlayer.setQuality(v);
+      }
+    }
+
+  };
+
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setRetainInstance(true);
   }
+
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     getVideoUrls();
-    mView = inflater.inflate(R.layout.fragment_video_player, container, false);
+    mView = inflater.inflate(R.layout.fragment_videoplayer_without_controls, container, false);
     mainHandler = new Handler();
     initViews();
     setUpListenerForPlayer();
     setUpGestureControls();
     setExoPlayer(video_url, video_type);
-    setUpControlEvents();
     setUpBrightness();
     return mView;
   }
@@ -83,81 +150,6 @@ public class ExVpCompleteFragment extends Fragment {
   private void setUpBrightness() {
     pBarBrighness.setMax(255);
     pBarBrighness.setProgress(BrightnessUtils.get(getActivity()));
-  }
-
-  private void setUpControlEvents() {
-    ivLock.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View view) {
-        if (exVidPlayer != null) {
-
-        }
-      }
-    });
-    ivForword.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View view) {
-        if (exVidPlayer != null) {
-          goForward();
-        }
-
-      }
-    });
-    ivRev.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View view) {
-        if (exVidPlayer != null) {
-          goReverse();
-        }
-
-      }
-    });
-    ivNext.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View view) {
-        if (exVidPlayer != null) {
-          exVidPlayer.nextTrack();
-        }
-      }
-    });
-    ivPrev.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View view) {
-        if (exVidPlayer != null) {
-          exVidPlayer.previousTrack();
-        }
-      }
-    });
-    ivPlayPause.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View view) {
-        if (exVidPlayer != null) {
-          if (exVidPlayer.isPlaying()) {
-            exVidPlayer.pause();
-            ivPlayPause.setImageResource(R.drawable.ic_play_circle_filled_white_white_24dp);
-          } else {
-            exVidPlayer.play();
-            ivPlayPause.setImageResource(R.drawable.ic_pause_circle_filled_white_24dp);
-          }
-        }
-      }
-    });
-    ivSetting.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View view) {
-        if (exVidPlayer != null) {
-          exVidPlayer.setQuality(view);
-        }
-      }
-    });
-    mProgress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-      @Override public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-
-      }
-
-      @Override public void onStartTrackingTouch(SeekBar seekBar) {
-
-      }
-
-      @Override public void onStopTrackingTouch(SeekBar seekBar) {
-        if (exVidPlayer != null) {
-          exVidPlayer.seekTo(mProgress.getProgress());
-        }
-      }
-    });
   }
 
   private void setExoPlayer(String[] urls, String[] type) {
@@ -174,18 +166,7 @@ public class ExVpCompleteFragment extends Fragment {
   private void initViews() {
     progressBar = (ProgressBar) mView.findViewById(R.id.pbar);
     surfaceView = (SurfaceView) mView.findViewById(R.id.surface_view);
-    //controls
-    root = (LinearLayout) mView.findViewById(R.id.root);
-    ivLock = (ImageButton) mView.findViewById(R.id.btn_lock);
-    ivRev = (ImageButton) mView.findViewById(R.id.btn_rev);
-    ivForword = (ImageButton) mView.findViewById(R.id.btn_fwd);
-    ivNext = (ImageButton) mView.findViewById(R.id.btn_next);
-    ivPrev = (ImageButton) mView.findViewById(R.id.btn_prev);
-    ivPlayPause = (ImageButton) mView.findViewById(R.id.btn_pause);
-    ivSetting = (ImageButton) mView.findViewById(R.id.btn_settings);
-    mProgress = (SeekBar) mView.findViewById(R.id.seekbar);
-    tvCurrent = (TextView) mView.findViewById(R.id.txt_currentTime);
-    tvTotal = (TextView) mView.findViewById(R.id.txt_totalDuration);
+    //skiptexts
     prgCenterText = (LinearLayout) mView.findViewById(R.id.seekbar_center_text);
     tvCenterCurrent = (TextView) mView.findViewById(R.id.txt_seek_currTime);
     tvCenterProg = (TextView) mView.findViewById(R.id.txt_seek_secs);
@@ -227,8 +208,8 @@ public class ExVpCompleteFragment extends Fragment {
 
       @Override public void onBufferingFinished() {
         progressBar.setVisibility(View.GONE);
-        mProgress.setMax(exVidPlayer.getTotalDuration());
-        tvTotal.setText(getDurationString(exVidPlayer.getTotalDuration()));
+        if (mProgress != null) mProgress.setMax(exVidPlayer.getTotalDuration());
+        if (tvTotal != null) tvTotal.setText(getDurationString(exVidPlayer.getTotalDuration()));
       }
 
       @Override public void onRendereingstarted() {
@@ -242,17 +223,21 @@ public class ExVpCompleteFragment extends Fragment {
       }
 
       @Override public void hideControls() {
-        root.setVisibility(View.GONE);
+        if (root != null) root.setVisibility(View.GONE);
       }
 
       @Override public void showControls() {
-        root.setVisibility(View.VISIBLE);
+        if (root != null) root.setVisibility(View.VISIBLE);
       }
 
       @Override public void onProgressChanged(int progress) {
-        mProgress.setMax(exVidPlayer.getTotalDuration());
-        mProgress.setProgress(progress);
-        tvCurrent.setText(getDurationString(exVidPlayer.getCurrentDuration()));
+        if (mProgress != null) {
+          mProgress.setMax(exVidPlayer.getTotalDuration());
+          mProgress.setProgress(progress);
+        }
+        if (tvCurrent != null) {
+          tvCurrent.setText(getDurationString(exVidPlayer.getCurrentDuration()));
+        }
       }
     };
   }
@@ -276,10 +261,12 @@ public class ExVpCompleteFragment extends Fragment {
     }
 
     @Override public void onTap() {
-      if (root.getVisibility() == View.VISIBLE) {
-        root.setVisibility(View.GONE);
-      } else {
-        exVidPlayer.showControls();
+      if (exVidPlayer != null) {
+        if (root.getVisibility() == View.VISIBLE) {
+          root.setVisibility(View.GONE);
+        } else {
+          exVidPlayer.showControls();
+        }
       }
     }
 
@@ -422,4 +409,6 @@ public class ExVpCompleteFragment extends Fragment {
 
     return (int) progress;
   }
+
+
 }
