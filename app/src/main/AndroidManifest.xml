@@ -1,16 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.veer.exvidplayersample">
+
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
   <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
   <application
       android:allowBackup="true"
       android:icon="@mipmap/ic_launcher"
       android:label="@string/app_name"
       android:supportsRtl="true"
       android:theme="@style/AppTheme">
-    <activity android:name=".MainActivity"
+    <activity
+        android:name=".CompleteActivity"
+        android:configChanges="orientation|screenSize"
+        android:theme="@style/AppTheme.NoActionBar">
+      <intent-filter>
+        <category android:name="android.intent.action.MAIN" /> <!-- If this is the main activity -->
+        <action android:name="android.intent.action.MUSIC_PLAYER" />
+        <action android:name="android.intent.category.APP_MUSIC" />
+
+        <data android:mimeType="video/*" /> <!-- To make sure we let Android know that we accept video -->
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data android:scheme="rtsp" />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+
+        <data android:mimeType="video/*" />
+        <data android:mimeType="application/sdp" />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data android:scheme="http" />
+        <data android:mimeType="video/*" />
+      </intent-filter>
+    </activity>
+    <activity android:name=".CustomControlsActivity"
         android:configChanges="orientation|screenSize">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />

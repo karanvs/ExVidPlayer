@@ -23,51 +23,47 @@ import com.veer.exvidplayer.Player.ExVidPlayerListener;
 import com.veer.exvidplayer.R;
 import java.util.concurrent.TimeUnit;
 import com.veer.exvidplayer.Utils.*;
+
 /**
  * Created by Brajendr on 1/26/2017.
  */
 
-public class VideoPlayerFragment extends Fragment {
+public class ExVpCompleteFragment extends Fragment {
   private View mView;
   private ProgressBar progressBar;
   private SurfaceView surfaceView;
   private ExVidPlayer exVidPlayer;
   //controls
-  private LinearLayout root,prgCenterText;
+  private LinearLayout root, prgCenterText;
   private ImageButton ivLock, ivNext, ivPrev, ivForword, ivRev, ivPlayPause, ivSetting;
   private SeekBar mProgress;
-  private TextView tvCurrent,tvTotal,tvCenterCurrent,tvCenterProg;
+  private TextView tvCurrent, tvTotal, tvCenterCurrent, tvCenterProg;
   //brightness
-  private LinearLayout brightnessSlider,brightnessCenterText;
-  private ImageView ivBrightness,ivBrightnessImage;
+  private LinearLayout brightnessSlider, brightnessCenterText;
+  private ImageView ivBrightness, ivBrightnessImage;
   private ProgressBar pBarBrighness;
   private TextView tvBrightnessPercent;
   //volume
-  private LinearLayout volumeSlider,volumeCenterText;
-  private ImageView ivVolume,ivVolumeImage;
+  private LinearLayout volumeSlider, volumeCenterText;
+  private ImageView ivVolume, ivVolumeImage;
   private VolBar pBarVolume;
   private TextView tvVolumePercent;
   //playerevent listener
   private ExVidPlayerListener mPlayerListener;
-  String[] video_url = new String[] {
-      "http://playertest.longtailvideo.com/adaptive/bbbfull/bbbfull.m3u8",
-      "http://cdnapi.kaltura.com/p/1878761/sp/187876100/playManifest/entryId/1_usagz19w/flavorIds/1_5spqkazq,1_nslowvhp,1_boih5aji,1_qahc37ag/format/applehttp/protocol/http/a.m3u8"
-  };
-  String[] video_type = new String[] {
-      Constants.MEDIA_TYPE_HLS, Constants.MEDIA_TYPE_HLS
-  };
+  String[] video_url;
+  String[] video_type;
   private Handler mainHandler;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setRetainInstance(true);
   }
-
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
+    getVideoUrls();
     mView = inflater.inflate(R.layout.fragment_video_player, container, false);
-    mainHandler=new Handler();
+    mainHandler = new Handler();
     initViews();
     setUpListenerForPlayer();
     setUpGestureControls();
@@ -75,6 +71,11 @@ public class VideoPlayerFragment extends Fragment {
     setUpControlEvents();
     setUpBrightness();
     return mView;
+  }
+
+  private void getVideoUrls() {
+    video_url = getArguments().getStringArray("urls");
+    video_type = getArguments().getStringArray("type");
   }
 
   private void setUpBrightness() {
@@ -92,12 +93,18 @@ public class VideoPlayerFragment extends Fragment {
     });
     ivForword.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
-        goForward();
+        if (exVidPlayer != null) {
+          goForward();
+        }
+
       }
     });
     ivRev.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
-       goReverse();
+        if (exVidPlayer != null) {
+          goReverse();
+        }
+
       }
     });
     ivNext.setOnClickListener(new View.OnClickListener() {
@@ -144,10 +151,9 @@ public class VideoPlayerFragment extends Fragment {
       }
 
       @Override public void onStopTrackingTouch(SeekBar seekBar) {
-          if(exVidPlayer!=null)
-          {
-            exVidPlayer.seekTo(mProgress.getProgress());
-          }
+        if (exVidPlayer != null) {
+          exVidPlayer.seekTo(mProgress.getProgress());
+        }
       }
     });
   }
@@ -159,8 +165,8 @@ public class VideoPlayerFragment extends Fragment {
   }
 
   @Override public void onDestroy() {
-      if (exVidPlayer != null) exVidPlayer.release();
-      super.onDestroy();
+    if (exVidPlayer != null) exVidPlayer.release();
+    super.onDestroy();
   }
 
   private void initViews() {
@@ -175,30 +181,29 @@ public class VideoPlayerFragment extends Fragment {
     ivPrev = (ImageButton) mView.findViewById(R.id.btn_prev);
     ivPlayPause = (ImageButton) mView.findViewById(R.id.btn_pause);
     ivSetting = (ImageButton) mView.findViewById(R.id.btn_settings);
-    mProgress=(SeekBar)mView.findViewById(R.id.seekbar);
-    tvCurrent=(TextView)mView.findViewById(R.id.txt_currentTime);
-    tvTotal=(TextView)mView.findViewById(R.id.txt_totalDuration);
-    prgCenterText=(LinearLayout) mView.findViewById(R.id.seekbar_center_text);
-    tvCenterCurrent=(TextView)mView.findViewById(R.id.txt_seek_currTime);
-    tvCenterProg=(TextView)mView.findViewById(R.id.txt_seek_secs);
+    mProgress = (SeekBar) mView.findViewById(R.id.seekbar);
+    tvCurrent = (TextView) mView.findViewById(R.id.txt_currentTime);
+    tvTotal = (TextView) mView.findViewById(R.id.txt_totalDuration);
+    prgCenterText = (LinearLayout) mView.findViewById(R.id.seekbar_center_text);
+    tvCenterCurrent = (TextView) mView.findViewById(R.id.txt_seek_currTime);
+    tvCenterProg = (TextView) mView.findViewById(R.id.txt_seek_secs);
     //brightness
-    brightnessSlider=(LinearLayout)getView(R.id.brightness_slider_container);
-    ivBrightness=(ImageView)getView(R.id.brightness_image);
-    ivBrightnessImage=(ImageView)getView(R.id.brightnessIcon);
-    pBarBrighness=(ProgressBar)getView(R.id.brightness_slider);
-    tvBrightnessPercent=(TextView)getView(R.id.brigtness_perc_center_text);
-    brightnessCenterText=(LinearLayout)getView(R.id.brightness_center_text);
+    brightnessSlider = (LinearLayout) getView(R.id.brightness_slider_container);
+    ivBrightness = (ImageView) getView(R.id.brightness_image);
+    ivBrightnessImage = (ImageView) getView(R.id.brightnessIcon);
+    pBarBrighness = (ProgressBar) getView(R.id.brightness_slider);
+    tvBrightnessPercent = (TextView) getView(R.id.brigtness_perc_center_text);
+    brightnessCenterText = (LinearLayout) getView(R.id.brightness_center_text);
     //volume
-    volumeSlider=(LinearLayout)getView(R.id.volume_slider_container);
-    ivVolume=(ImageView)getView(R.id.vol_image);
-    ivVolumeImage=(ImageView)getView(R.id.volIcon);
-    pBarVolume=(VolBar) getView(R.id.volume_slider);
-    tvVolumePercent=(TextView)getView(R.id.vol_perc_center_text);
-    volumeCenterText=(LinearLayout)getView(R.id.vol_center_text);
+    volumeSlider = (LinearLayout) getView(R.id.volume_slider_container);
+    ivVolume = (ImageView) getView(R.id.vol_image);
+    ivVolumeImage = (ImageView) getView(R.id.volIcon);
+    pBarVolume = (VolBar) getView(R.id.volume_slider);
+    tvVolumePercent = (TextView) getView(R.id.vol_perc_center_text);
+    volumeCenterText = (LinearLayout) getView(R.id.vol_center_text);
   }
 
-  public View getView(int id)
-  {
+  public View getView(int id) {
     return mView.findViewById(id);
   }
 
@@ -244,20 +249,17 @@ public class VideoPlayerFragment extends Fragment {
         mProgress.setMax(exVidPlayer.getTotalDuration());
         mProgress.setProgress(progress);
         tvCurrent.setText(getDurationString(exVidPlayer.getCurrentDuration()));
-
       }
     };
   }
 
-  private String getDurationString(int duration)
-  {
-    return
-    String.format("%02d.%02d.%02d", TimeUnit.MILLISECONDS.toHours(duration),
-            TimeUnit.MILLISECONDS.toMinutes(duration) - TimeUnit.HOURS.toMinutes(
-                TimeUnit.MILLISECONDS.toHours(duration)),
-            // The change is in this line
-            TimeUnit.MILLISECONDS.toSeconds(duration) - TimeUnit.MINUTES.toSeconds(
-                TimeUnit.MILLISECONDS.toMinutes(duration)));
+  private String getDurationString(int duration) {
+    return String.format("%02d.%02d.%02d", TimeUnit.MILLISECONDS.toHours(duration),
+        TimeUnit.MILLISECONDS.toMinutes(duration) - TimeUnit.HOURS.toMinutes(
+            TimeUnit.MILLISECONDS.toHours(duration)),
+        // The change is in this line
+        TimeUnit.MILLISECONDS.toSeconds(duration) - TimeUnit.MINUTES.toSeconds(
+            TimeUnit.MILLISECONDS.toMinutes(duration)));
   }
 
   private void setUpGestureControls() {
@@ -270,7 +272,9 @@ public class VideoPlayerFragment extends Fragment {
     }
 
     @Override public void onTap() {
-      if (exVidPlayer != null) {
+      if (root.getVisibility() == View.VISIBLE) {
+        root.setVisibility(View.GONE);
+      } else {
         exVidPlayer.showControls();
       }
     }
@@ -281,19 +285,15 @@ public class VideoPlayerFragment extends Fragment {
 
     @Override public void onVerticalScroll(MotionEvent event, float delta) {
 
-      if(event.getPointerCount()==ONE_FINGER) {
-        updateBrightnessProgressBar(extractVerticalDeltaScale(-delta,pBarBrighness));
+      if (event.getPointerCount() == ONE_FINGER) {
+        updateBrightnessProgressBar(extractVerticalDeltaScale(-delta, pBarBrighness));
+      } else {
+        updateVolumeProgressBar(extractVerticalDeltaScale(-delta, pBarVolume));
       }
-      else
-      {
-        updateVolumeProgressBar(extractVerticalDeltaScale(-delta,pBarVolume));
-      }
-
     }
 
     @Override public void onSwipeRight() {
       goForward();
-
     }
 
     @Override public void onSwipeLeft() {
@@ -307,37 +307,33 @@ public class VideoPlayerFragment extends Fragment {
     @Override public void onSwipeTop() {
 
     }
-
   }
 
   private void goForward() {
-    if(exVidPlayer!=null && exVidPlayer.canSeekForward())
-    {
+    if (exVidPlayer != null && exVidPlayer.canSeekForward()) {
       prgCenterText.setVisibility(View.VISIBLE);
-      tvCenterCurrent.setText("["+getDurationString(exVidPlayer.getCurrentDuration())+"]");
-      tvCenterProg.setText("+ "+getDurationString(Constants.SEEK_TIME));
+      tvCenterCurrent.setText("[" + getDurationString(exVidPlayer.getCurrentDuration()) + "]");
+      tvCenterProg.setText("+ " + getDurationString(Constants.SEEK_TIME));
       exVidPlayer.forward();
       mainHandler.postDelayed(new Runnable() {
         @Override public void run() {
           prgCenterText.setVisibility(View.GONE);
         }
-      },2000);
+      }, 2000);
     }
   }
 
-  private void goReverse()
-  {
-    if(exVidPlayer!=null&& exVidPlayer.canSeekBackWard())
-    {
-      tvCenterCurrent.setText("["+getDurationString(exVidPlayer.getCurrentDuration())+"]");
-      tvCenterProg.setText("- "+getDurationString(Constants.SEEK_TIME));
+  private void goReverse() {
+    if (exVidPlayer != null && exVidPlayer.canSeekBackWard()) {
+      tvCenterCurrent.setText("[" + getDurationString(exVidPlayer.getCurrentDuration()) + "]");
+      tvCenterProg.setText("- " + getDurationString(Constants.SEEK_TIME));
       prgCenterText.setVisibility(View.VISIBLE);
       exVidPlayer.reverse();
       mainHandler.postDelayed(new Runnable() {
         @Override public void run() {
           prgCenterText.setVisibility(View.GONE);
         }
-      },2000);
+      }, 2000);
     }
   }
 
@@ -352,7 +348,7 @@ public class VideoPlayerFragment extends Fragment {
     }
     BrightnessUtils.set(getActivity(), (int) v);
     pBarBrighness.setProgress((int) v);
-    int brightPerc=pBarBrighness.getProgress()*100/255;
+    int brightPerc = pBarBrighness.getProgress() * 100 / 255;
     if (brightPerc < 30) {
       ivBrightness.setImageResource(R.drawable.hplib_brightness_minimum);
       ivBrightnessImage.setImageResource(R.drawable.hplib_brightness_minimum);
@@ -369,23 +365,22 @@ public class VideoPlayerFragment extends Fragment {
         brightnessSlider.setVisibility(View.GONE);
         brightnessCenterText.setVisibility(View.GONE);
       }
-    },2000);
-
+    }, 2000);
   }
 
   private void updateVolumeProgressBar(float v) {
-    int max=pBarVolume.getMax();
+    int max = pBarVolume.getMax();
     volumeSlider.setVisibility(View.VISIBLE);
     volumeCenterText.setVisibility(View.VISIBLE);
-    int vol=(int)(v);
+    int vol = (int) (v);
     if (vol < 0) {
       vol = 0;
     } else if (vol > max) {
       vol = max;
     }
     pBarVolume.setProgress((int) vol);
-    int volPerc=pBarVolume.getProgress()*100/max;
-    tvVolumePercent.setText(" " +  volPerc);
+    int volPerc = pBarVolume.getProgress() * 100 / max;
+    tvVolumePercent.setText(" " + volPerc);
     if (volPerc < 1) {
       ivVolume.setImageResource(R.drawable.hplib_volume_mute);
       ivVolumeImage.setImageResource(R.drawable.hplib_volume_mute);
@@ -400,10 +395,8 @@ public class VideoPlayerFragment extends Fragment {
         volumeSlider.setVisibility(View.GONE);
         volumeCenterText.setVisibility(View.GONE);
       }
-    },2000);
-
+    }, 2000);
   }
-
 
   private int extractVerticalDeltaScale(float deltaY, ProgressBar progressBar) {
     return extractDeltaScale(progressBar.getHeight(), deltaY, progressBar);

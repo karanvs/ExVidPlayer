@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_simple_player"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.veer.exvidplayersample.CustomControlsActivity"
+    >
+
+  <RelativeLayout
+      android:id="@+id/bestlayout"
+      android:layout_width="match_parent"
+      android:layout_height="300dp"
+      >
+    <FrameLayout
+        android:id="@+id/parent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#000000"
+        android:keepScreenOn="true"
+        >
+
+    </FrameLayout>
+    <LinearLayout
+        android:id="@+id/root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:visibility="visible"
+        >
+
+      <LinearLayout
+          android:id="@+id/seekbar_time"
+          android:layout_width="match_parent"
+          android:layout_height="48dp"
+          android:background="#96000000"
+          android:gravity="center"
+          android:orientation="horizontal"
+          android:visibility="visible"
+          >
+
+        <TextView
+            android:id="@+id/txt_currentTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:text="00:00:00"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#FFF"
+            />
+
+        <SeekBar
+            android:id="@+id/seekbar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+        <!--android:indeterminate="false"
+        style="@android:style/Widget.DeviceDefault.Light.SeekBar"
+        android:thumbTint="#ffffff"
+        android:progress="0"
+        android:secondaryProgress="0"
+        android:splitTrack="false"
+        android:progressTint="#2473ac"
+        android:secondaryProgressTint="#9A8486"
+        android:foregroundTint="#7F5C62"
+        android:foreground="#7F5C62" />-->
+
+        <TextView
+            android:id="@+id/txt_totalDuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="20dp"
+            android:paddingTop="10dp"
+            android:text="00:00:00"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#FFF"
+            />
+
+      </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/controls"
+          android:layout_width="match_parent"
+          android:layout_height="48dp"
+          android:layout_gravity="center"
+          android:background="#96000000"
+          android:orientation="horizontal"
+          android:paddingBottom="10dp"
+          android:visibility="visible"
+          >
+
+        <ImageButton
+            android:id="@+id/btn_prev"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:cropToPadding="false"
+            android:src="@drawable/ic_skip_previous_white_24dp"
+            />
+
+
+        <ImageButton
+            android:id="@+id/btn_rev"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_fast_rewind_white_24dp"
+            />
+
+        <ImageButton
+            android:id="@+id/btn_pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_play_circle_filled_white_white_24dp"
+            />
+
+        <ImageButton
+            android:id="@+id/btn_fwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_fast_forward_white_24dp"
+            android:text="+30s"
+            />
+
+        <ImageButton
+            android:id="@+id/btn_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_skip_next_white_24dp"
+            />
+
+        <ImageButton
+            android:id="@+id/btn_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:foregroundGravity="right"
+            android:src="@drawable/ic_switch_video_white_24dp"
+            android:text="Settings"
+            />
+
+
+      </LinearLayout>
+
+    </LinearLayout>
+
+  </RelativeLayout>
+
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_below="@+id/bestlayout"
+      >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Rotate your device to get full screen,
+        with continous playback"
+        android:textColor="@color/white"
+        />
+  </RelativeLayout>
+
+</RelativeLayout>
