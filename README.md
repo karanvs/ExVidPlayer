@@ -22,6 +22,15 @@ dependencies {
 
 ## Usage
 
+# Add permissions to your manifest
+
+```
+
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+```
+Settings permission will used for brightness controls, If you are using only ExVidPlayer, then you may skip it.
+
 #  ExVidPlayer(Simple)
 
 * Define an instance of ExVidPlayer and set player event listener,
