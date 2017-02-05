@@ -6,8 +6,10 @@ import android.view.SurfaceView;
 import android.view.View;
 import com.google.android.exoplayer.AspectRatioFrameLayout;
 
+import java.util.ArrayList;
+
 public interface ExVidPlayer {
-  void setSource(String[] url, String[] vtype);
+  void setSource(ArrayList<String> urls, ArrayList<String> vtype);
 
   void reset();
 

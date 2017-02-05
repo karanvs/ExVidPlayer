@@ -22,6 +22,8 @@ import com.veer.exvidplayer.Player.Constants;
 import com.veer.exvidplayer.Player.ExVidPlayer;
 import com.veer.exvidplayer.Player.ExVidPlayerListener;
 import com.veer.exvidplayer.R;
+
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import com.veer.exvidplayer.Utils.*;
 
@@ -52,8 +54,7 @@ public class ExVpCompleteFragment extends Fragment {
   private TextView tvVolumePercent;
   //playerevent listener
   private ExVidPlayerListener mPlayerListener;
-  String[] video_url;
-  String[] video_type;
+  ArrayList<String> video_url,video_type;
   private Handler mainHandler;
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,15 +70,15 @@ public class ExVpCompleteFragment extends Fragment {
     initViews();
     setUpListenerForPlayer();
     setUpGestureControls();
-    setExoPlayer(video_url, video_type);
+    setExoPlayer();
     setUpControlEvents();
     setUpBrightness();
     return mView;
   }
 
   private void getVideoUrls() {
-    video_url = getArguments().getStringArray("urls");
-    video_type = getArguments().getStringArray("type");
+    video_url = getArguments().getStringArrayList("urls");
+    video_type = getArguments().getStringArrayList("type");
   }
 
   private void setUpBrightness() {
@@ -160,10 +161,10 @@ public class ExVpCompleteFragment extends Fragment {
     });
   }
 
-  private void setExoPlayer(String[] urls, String[] type) {
+  private void setExoPlayer() {
     exVidPlayer = ExVidPlayer.Factory.newInstance(getActivity(), surfaceView, mainHandler,aspectRatioFrameLayout);
     exVidPlayer.setListener(mPlayerListener);
-    exVidPlayer.setSource(urls, type);
+    exVidPlayer.setSource(video_url, video_type);
   }
 
   @Override public void onDestroy() {

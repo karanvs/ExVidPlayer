@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by Brajendr on 1/26/2017.
+ * Created by Brajendra on 1/26/2017.
  */
 
 final class ExVidPlayerImp implements HlsSampleSource.EventListener,ExVidPlayer {
@@ -47,7 +47,7 @@ final class ExVidPlayerImp implements HlsSampleSource.EventListener,ExVidPlayer 
   private Activity activity;
   private Handler mainHandler;
   private ExVidPlayerListener mlistener;
-  private String[] video_url, video_type;
+  private ArrayList<String> video_url, video_type;
   private int currentTrackIndex = 0;
   private RendererBuilder rendererBuilder;
   private TrackRenderer videoRenderer;
@@ -112,14 +112,14 @@ final class ExVidPlayerImp implements HlsSampleSource.EventListener,ExVidPlayer 
 
   private RendererBuilder getHpLibRendererBuilder() {
     String userAgent = Util.getUserAgent(activity, "HpLib");
-    switch (video_type[currentTrackIndex]) {
+    switch (video_type.get(currentTrackIndex)) {
       case "hls":
-        return new HlsRendererBuilder(activity, userAgent, video_url[currentTrackIndex]);
+        return new HlsRendererBuilder(activity, userAgent, video_url.get(currentTrackIndex));
       case "others":
         return new ExtractorRendererBuilder(activity, userAgent,
-            Uri.parse(video_url[currentTrackIndex]));
+            Uri.parse(video_url.get(currentTrackIndex)));
       default:
-        throw new IllegalStateException("Unsupported type: " + video_url[currentTrackIndex]);
+        throw new IllegalStateException("Unsupported type: " + video_url.get(currentTrackIndex));
     }
   }
 
@@ -164,7 +164,7 @@ final class ExVidPlayerImp implements HlsSampleSource.EventListener,ExVidPlayer 
     }
   }
 
-  @Override public void setSource(String[] url, String[] vtype) {
+  @Override public void setSource(ArrayList<String> url, ArrayList<String> vtype) {
     video_url = url;
     video_type = vtype;
     initPlayer();
@@ -213,7 +213,7 @@ final class ExVidPlayerImp implements HlsSampleSource.EventListener,ExVidPlayer 
 
   @Override public void nextTrack() {
     int nextTrack = currentTrackIndex + 1;
-    if (nextTrack < video_url.length) {
+    if (nextTrack < video_url.size()) {
       release();
       currentTrackIndex = nextTrack;
       initPlayer();

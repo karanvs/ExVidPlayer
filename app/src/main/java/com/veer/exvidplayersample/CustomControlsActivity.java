@@ -17,17 +17,19 @@ import com.veer.exvidplayer.VideoPlayer.ExVpCompleteFragment;
 import com.veer.exvidplayer.VideoPlayer.ExVpFragment;
 import com.veer.exvidplayer.VideoPlayer.ExVpListener;
 
-public class CustomControlsActivity extends AppCompatActivity {
-  String[] video_url = new String[] {
+import java.util.ArrayList;
+import java.util.Arrays;
 
-      "http://cfvod.kaltura.com/pd/p/1588381/sp/158838100/serveFlavor/entryId/0_23g1ysp4/v/2/flavorId/0_9w7gdeo3/name/a.mp4"
-      ,"http://playertest.longtailvideo.com/adaptive/bbbfull/bbbfull.m3u8",
-      "http://cdnapi.kaltura.com/p/1878761/sp/187876100/playManifest/entryId/1_usagz19w/flavorIds/1_5spqkazq,1_nslowvhp,1_boih5aji,1_qahc37ag/format/applehttp/protocol/http/a.m3u8"
+public class CustomControlsActivity extends AppCompatActivity {
+  String[] url = new String[] {
+          "http://playertest.longtailvideo.com/adaptive/bbbfull/bbbfull.m3u8",
+          "http://cdnapi.kaltura.com/p/1878761/sp/187876100/playManifest/entryId/1_usagz19w/flavorIds/1_5spqkazq,1_nslowvhp,1_boih5aji,1_qahc37ag/format/applehttp/protocol/http/a.m3u8"
   };
-  String[] video_type = new String[] {
-      Constants.MEDIA_TYPE_OTHERS,
-      Constants.MEDIA_TYPE_HLS, Constants.MEDIA_TYPE_HLS
+  String[] type = new String[] {
+          Constants.MEDIA_TYPE_HLS, Constants.MEDIA_TYPE_HLS
   };
+  ArrayList video_url=(ArrayList<String>) Arrays.asList(url);
+  ArrayList video_type=(ArrayList<String>) Arrays.asList(type);
   //controls
   private LinearLayout root;
   private ImageButton ivNext, ivPrev, ivForword, ivRev, ivPlayPause, ivSetting;
@@ -102,8 +104,8 @@ public class CustomControlsActivity extends AppCompatActivity {
     exVpControls=exVpFragment.getExVpListener();
     setUpControls();
     Bundle bundle = new Bundle();
-    bundle.putStringArray("urls", video_url);
-    bundle.putStringArray("type", video_type);
+    bundle.putStringArrayList("urls", video_url);
+    bundle.putStringArrayList("type", video_type);
     exVpFragment.setArguments(bundle);
     fragmentTransaction.add(R.id.parent, exVpFragment);
     fragmentTransaction.commit();
