@@ -106,6 +106,7 @@ public class CustomControlsActivity extends AppCompatActivity {
     Bundle bundle = new Bundle();
     bundle.putStringArrayList("urls", video_url);
     bundle.putStringArrayList("type", video_type);
+    bundle.putInt("currentIndex",0);
     exVpFragment.setArguments(bundle);
     fragmentTransaction.add(R.id.parent, exVpFragment);
     fragmentTransaction.commit();

@@ -164,9 +164,10 @@ final class ExVidPlayerImp implements HlsSampleSource.EventListener,ExVidPlayer 
     }
   }
 
-  @Override public void setSource(ArrayList<String> url, ArrayList<String> vtype) {
+  @Override public void setSource(ArrayList<String> url, ArrayList<String> vtype,int currentIndex) {
     video_url = url;
     video_type = vtype;
+    currentTrackIndex=currentIndex;
     initPlayer();
   }
 

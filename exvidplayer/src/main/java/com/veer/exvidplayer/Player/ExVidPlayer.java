@@ -9,7 +9,7 @@ import com.google.android.exoplayer.AspectRatioFrameLayout;
 import java.util.ArrayList;
 
 public interface ExVidPlayer {
-  void setSource(ArrayList<String> urls, ArrayList<String> vtype);
+  void setSource(ArrayList<String> urls, ArrayList<String> vtype,int currentIndex);
 
   void reset();
 

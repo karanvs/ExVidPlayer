@@ -57,7 +57,9 @@ public class ExVpFragment extends Fragment {
   //playerevent listener
   private ExVidPlayerListener mPlayerListener;
   ArrayList<String> video_url,video_type;
+  private int currentIndex=0;
   private Handler mainHandler;
+
 
   public ExVpListener getExVpListener() {
     return exVpListener;
@@ -146,6 +148,7 @@ public class ExVpFragment extends Fragment {
   private void getVideoUrls() {
     video_url = getArguments().getStringArrayList("urls");
     video_type = getArguments().getStringArrayList("type");
+    currentIndex=getArguments().getInt("currentIndex");
   }
 
   private void setUpBrightness() {
@@ -156,7 +159,7 @@ public class ExVpFragment extends Fragment {
   private void setExoPlayer() {
     exVidPlayer = ExVidPlayer.Factory.newInstance(getActivity(), surfaceView, mainHandler,aspectRatioFrameLayout);
     exVidPlayer.setListener(mPlayerListener);
-    exVidPlayer.setSource(video_url, video_type);
+    exVidPlayer.setSource(video_url, video_type,currentIndex);
   }
 
   @Override public void onDestroy() {
