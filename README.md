@@ -16,7 +16,7 @@ allprojects {
 *  Add dependency for library
 ```
 dependencies {
-	        compile 'com.github.karanvs:ExVidPlayer:V1.1'
+	        compile 'com.github.karanvs:ExVidPlayer:v1.5'
 	}
 ```
 
@@ -32,6 +32,7 @@ dependencies {
 Settings permission will used for brightness controls, If you are using only ExVidPlayer, then you may skip it.
 This will work pre Marshmallow, however for Marshmallow and above, you will have to explicity demand permission at runtime.
 Initialize your ExVidPlayer instance only when you have the permissions otherwise it may lead to runtime error.
+ExVidPlayerActivity automatically handles this for you , but you may lose the flexbility to place the video in layout as per your need, you may achieve this either by ExVpCompleteFragment (with controls) and ExVpFragment with your custom controls.
 
 #  ExVidPlayer(Simple)
 
@@ -158,6 +159,29 @@ void nextTrack();
 void previousTrack();
 
 ```
+
+#  ExVidPlayerActivity 
+
+Declare in your manifest
+
+```
+
+<activity android:name="com.veer.exvidplayer.VideoPlayer.ExVidPlayerActivity"
+android:configChanges="orientation|screenSize"></activity>
+
+```
+
+Use as
+ 
+```
+Intent intent = new Intent(HomeDetailScreen.this, ExVidPlayerActivity.class);
+intent.putStringArrayListExtra("urls", video_urls);
+intent.putStringArrayListExtra("types", video_types);
+intent.putExtra("currentIndex", postion);
+startActivity(intent);
+
+```
+
 
 * Device orientation handling,
 
