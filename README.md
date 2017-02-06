@@ -16,7 +16,7 @@ allprojects {
 *  Add dependency for library
 ```
 dependencies {
-	        compile 'com.github.karanvs:ExVidPlayer:v1.0'
+	        compile 'com.github.karanvs:ExVidPlayer:V1.1'
 	}
 ```
 
@@ -39,7 +39,7 @@ Settings permission will used for brightness controls, If you are using only ExV
 // initialize the new player instance
 ExVidPlayer exVidPlayer = ExVidPlayer.Factory.newInstance(getActivity(), surfaceView, mainHandler,aspectRatioFrameLayout);
 exVidPlayer.setListener(mPlayerListener);
-exVidPlayer.setSource(video_url, video_type);
+exVidPlayer.setSource(video_url, video_type,currentTrackIndex);
 
 //define listener
 
@@ -104,6 +104,7 @@ mPlayerListener=exVpCompleteFragment.
 Bundle bundle=new Bundle();
 bundle.putStringArrayList("urls",video_url);
 bundle.putStringArrayList("type",video_type);
+bundle.putInt("currentIndex",0);
 exVpCompleteFragment.setArguments(bundle);
 fragmentTransaction.add(R.id.parent, exVpCompleteFragment);
 fragmentTransaction.commit();
@@ -130,6 +131,7 @@ exVpControls=exVpFragment.getExVpListener();
 Bundle bundle = new Bundle();
 bundle.putStringArrayList("urls", video_url);
 bundle.putStringArrayList("type", video_type);
+bundle.putInt("currentIndex",0);
 exVpFragment.setArguments(bundle);
 fragmentTransaction.add(R.id.parent, exVpFragment);
 fragmentTransaction.commit();
