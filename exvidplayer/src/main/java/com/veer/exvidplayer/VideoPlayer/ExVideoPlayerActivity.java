@@ -71,6 +71,7 @@ public class ExVideoPlayerActivity extends AppCompatActivity {
           String message = "Permission needed to run the player";
           Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
           finish();
+          
         }
         return;
       }
