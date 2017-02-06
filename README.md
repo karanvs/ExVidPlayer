@@ -30,6 +30,8 @@ dependencies {
   <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 ```
 Settings permission will used for brightness controls, If you are using only ExVidPlayer, then you may skip it.
+This will work pre Marshmallow, however for Marshmallow and above, you will have to explicity demand permission at runtime.
+Initialize your ExVidPlayer instance only when you have the permissions otherwise it may lead to runtime error.
 
 #  ExVidPlayer(Simple)
 
@@ -159,13 +161,10 @@ void previousTrack();
 
 * Device orientation handling,
 
+ExVidPlayer handler by default screen orientation, playback will continue without disruption. You need to make changes to your activity decleration in your manifest
 ```
-
-ExVidPlayer handler by default screen orientation, playback will continue without disruption. You need to make changes to your activity decleration in your manifest.
-
 Add this to your activity tag.
 android:configChanges="orientation|screenSize"
-
 ```
 
 ### License
