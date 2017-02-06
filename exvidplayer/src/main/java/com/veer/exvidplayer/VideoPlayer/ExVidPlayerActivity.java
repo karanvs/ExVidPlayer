@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.veer.exvidplayer.R;
 import java.util.ArrayList;
 
-public class ExVideoPlayerActivity extends AppCompatActivity {
+public class ExVidPlayerActivity extends AppCompatActivity {
   private ArrayList video_url = new ArrayList();
   private ArrayList video_type = new ArrayList();
   private int currentIndex = 0;
@@ -71,7 +71,7 @@ public class ExVideoPlayerActivity extends AppCompatActivity {
           String message = "Permission needed to run the player";
           Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
           finish();
-          
+
         }
         return;
       }
