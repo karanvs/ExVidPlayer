@@ -106,7 +106,7 @@ bundle.putStringArrayList("urls",video_url);
 bundle.putStringArrayList("type",video_type);
 bundle.putInt("currentIndex",0);
 exVpCompleteFragment.setArguments(bundle);
-fragmentTransaction.add(R.id.parent, exVpCompleteFragment);
+fragmentTransaction.add(R.id.parent, exVpCompleteFragment);//replace parent with id of your framelayout
 fragmentTransaction.commit();
 
 ```
@@ -154,6 +154,17 @@ void forward();
 void reverse();
 void nextTrack();
 void previousTrack();
+
+```
+
+* Device orientation handling,
+
+```
+
+ExVidPlayer handler by default screen orientation, playback will continue without disruption. You need to make changes to your activity decleration in your manifest.
+
+Add this to your activity tag.
+android:configChanges="orientation|screenSize"
 
 ```
 
