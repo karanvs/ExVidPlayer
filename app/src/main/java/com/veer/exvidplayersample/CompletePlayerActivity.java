@@ -18,8 +18,8 @@ public class CompletePlayerActivity extends AppCompatActivity {
   String[] type = new String[] {
       Constants.MEDIA_TYPE_HLS, Constants.MEDIA_TYPE_HLS
   };
-  ArrayList video_url=(ArrayList<String>) Arrays.asList(url);
-  ArrayList video_type=(ArrayList<String>) Arrays.asList(type);
+  ArrayList video_url=new ArrayList(Arrays.asList(url));
+  ArrayList video_type=new ArrayList(Arrays.asList(type));
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
