@@ -10,6 +10,7 @@
       android:layout_height="fill_parent"
       android:layout_gravity="center"
       android:visibility="visible"
+      android:layout_centerInParent="true"
       android:foregroundGravity="center">
 
     <SurfaceView android:id="@+id/surface_view"
