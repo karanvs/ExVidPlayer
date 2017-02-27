@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" android:layout_height="fill_parent"
+    android:id="@+id/mlayout_media_choose">
+
+  <RelativeLayout
+      android:layout_width="fill_parent"
+      android:layout_height="50dp"
+      android:id="@+id/dsa"
+      android:orientation="horizontal"
+      android:background="@color/colorPrimary">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:id="@+id/layout_linear"
+        >
+      <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="fill_parent"
+          android:paddingLeft="10dp"
+          android:paddingRight="10dp"
+          android:src="@drawable/ic_arrow_back_white_24dp"
+          android:id="@+id/media_action_back"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical"
+        android:text="Select Images"
+        android:layout_toRightOf="@+id/layout_linear"
+        android:id="@+id/media_action_text"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+
+        />
+
+    <Button android:id="@+id/selectBtn"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="Add" android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:gravity="right|center_vertical"
+        android:paddingRight="20dp"
+        android:drawableLeft="@drawable/ic_done_all_white_24dp"
+        android:textColor="@color/white"
+        android:background="@color/colorPrimary"
+        />
+
+  </RelativeLayout>
+
+  <android.support.v7.widget.RecyclerView android:id="@+id/gridView"
+      android:layout_below="@+id/dsa"
+      android:layout_marginTop="5dp"
+      android:layout_marginLeft="5dp"
+      android:layout_marginRight="5dp"
+      android:layout_width="fill_parent" android:layout_height="fill_parent"
+      android:numColumns="3" android:verticalSpacing="5dp"
+      android:horizontalSpacing="5dp"
+      android:stretchMode="columnWidth" android:gravity="center"
+      />
+
+</RelativeLayout>

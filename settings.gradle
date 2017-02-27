@@ -1,1 +1,1 @@
-include ':app', ':exvidplayer', ':exvidplayerfragment'
+include ':app', ':exvidplayer', ':exvidplayerfragment', ':MultiSelectAndroid', ':multiselect'

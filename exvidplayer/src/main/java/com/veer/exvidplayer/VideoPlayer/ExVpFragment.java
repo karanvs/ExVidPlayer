@@ -162,6 +162,11 @@ public class ExVpFragment extends Fragment {
     exVidPlayer.setSource(video_url, video_type,currentIndex);
   }
 
+  @Override public void onStop() {
+    if (exVidPlayer != null) exVidPlayer.release();
+    super.onStop();
+  }
+
   @Override public void onDestroy() {
     if (exVidPlayer != null) exVidPlayer.release();
     super.onDestroy();
