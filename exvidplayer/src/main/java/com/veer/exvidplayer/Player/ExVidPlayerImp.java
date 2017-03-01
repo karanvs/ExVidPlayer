@@ -193,16 +193,19 @@ final class ExVidPlayerImp implements HlsSampleSource.EventListener,ExVidPlayer 
     });
     ArrayList<Integer> formats = new ArrayList<>();
     Menu menu = popup.getMenu();
-    menu.add(Menu.NONE, 0, 0, "Video Quality");
+    menu.add(Menu.NONE, 0, 0, "Bitrate");
+
     for (int i = 0; i < player.getTrackCount(0); i++) {
       MediaFormat format = player.getTrackFormat(0, i);
       if (MimeTypes.isVideo(format.mimeType)) {
+        Log.e("dsa",format.bitrate+"");
         if (format.adaptive) {
           menu.add(1, (i + 1), (i + 1), "Auto");
         } else {
-          if (!formats.contains(format.width)) {
-            menu.add(1, (i + 1), (i + 1), format.width + "p");
-            formats.add(format.width);
+
+          if (!formats.contains(format.bitrate)) {
+            menu.add(1, (i + 1), (i + 1), (format.bitrate)/1000 + " kbps");
+            formats.add(format.bitrate);
           }
         }
       }
