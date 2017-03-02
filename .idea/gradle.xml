@@ -8,11 +8,9 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/MultiSelectAndroid" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/exvidplayer" />
             <option value="$PROJECT_DIR$/exvidplayerfragment" />
-            <option value="$PROJECT_DIR$/multiselect" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

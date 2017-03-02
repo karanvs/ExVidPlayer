@@ -4,11 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ExVidPlayer.iml" filepath="$PROJECT_DIR$/ExVidPlayer.iml" />
       <module fileurl="file://$PROJECT_DIR$/ExVidPlayerSample.iml" filepath="$PROJECT_DIR$/ExVidPlayerSample.iml" />
-      <module fileurl="file://$PROJECT_DIR$/MultiSelectAndroid/MultiSelectAndroid.iml" filepath="$PROJECT_DIR$/MultiSelectAndroid/MultiSelectAndroid.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/exvidplayer/exvidplayer.iml" filepath="$PROJECT_DIR$/exvidplayer/exvidplayer.iml" />
       <module fileurl="file://$PROJECT_DIR$/exvidplayerfragment/exvidplayerfragment.iml" filepath="$PROJECT_DIR$/exvidplayerfragment/exvidplayerfragment.iml" />
-      <module fileurl="file://$PROJECT_DIR$/multiselect/multiselect.iml" filepath="$PROJECT_DIR$/multiselect/multiselect.iml" />
     </modules>
   </component>
 </project>
