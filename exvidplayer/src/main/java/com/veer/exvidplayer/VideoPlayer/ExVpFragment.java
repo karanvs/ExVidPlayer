@@ -124,6 +124,12 @@ public class ExVpFragment extends Fragment {
       }
     }
 
+    @Override public void seekTo(int progress) {
+      if(exVidPlayer!=null)
+      {
+        exVidPlayer.seekTo(progress);
+      }
+    }
   };
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
