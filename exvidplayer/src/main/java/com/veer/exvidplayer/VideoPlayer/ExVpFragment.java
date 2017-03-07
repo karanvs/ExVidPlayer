@@ -124,7 +124,7 @@ public class ExVpFragment extends Fragment {
       }
     }
 
-    @Override public void seekTo(int progress) {
+    @Override public void seekToProgress(int progress) {
       if(exVidPlayer!=null)
       {
         exVidPlayer.seekTo(progress);

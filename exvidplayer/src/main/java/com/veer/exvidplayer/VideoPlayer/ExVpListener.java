@@ -32,5 +32,5 @@ public interface ExVpListener {
 
   void changeQuality(View v);
 
-  void seekTo(int progress);
+  void seekToProgress(int progress);
 }
