@@ -88,8 +88,8 @@ final class ExVidPlayerImp implements HlsSampleSource.EventListener, ExVidPlayer
   }
 
   @Override public void removeTrack(int position) {
-      video_url.remove(position);
-      video_type.remove(position);
+    video_url.remove(position);
+    video_type.remove(position);
   }
 
   @Override public void setAspectRatio(float ratio) {
@@ -188,10 +188,10 @@ final class ExVidPlayerImp implements HlsSampleSource.EventListener, ExVidPlayer
   }
 
   @Override public void setCurrentTrack(int position) {
-    if(player!=null)
-    {
-      player.setSelectedTrack(TYPE_VIDEO,position);
-    }
+
+    release();
+    currentTrackIndex = position;
+    initPlayer();
   }
 
   @Override public void release() {
