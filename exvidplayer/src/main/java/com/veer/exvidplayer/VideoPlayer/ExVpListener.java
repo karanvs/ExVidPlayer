@@ -36,6 +36,8 @@ public interface ExVpListener {
 
   void setCurrent(int position);
 
+  boolean isPlaying();
+
   void removeTrack(int position);
 
   void seekToProgress(int progress);

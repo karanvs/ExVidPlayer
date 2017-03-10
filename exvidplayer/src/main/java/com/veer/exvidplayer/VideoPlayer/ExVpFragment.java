@@ -139,6 +139,12 @@ public class ExVpFragment extends Fragment {
       }
     }
 
+    @Override public boolean isPlaying() {
+
+      return exVidPlayer.isPlaying();
+
+    }
+
     @Override public void removeTrack(int position) {
       if(exVidPlayer!=null)
       {
