@@ -34,7 +34,7 @@ import java.util.concurrent.TimeUnit;
  * Created by Brajendra on 1/26/2017.
  */
 
-final class ExVidPlayerImp implements HlsSampleSource.EventListener,ExVidPlayer {
+final class ExVidPlayerImp implements HlsSampleSource.EventListener, ExVidPlayer {
   private static final String TAG = "ExVidPlayerImp";
 
   public static final int RENDERER_COUNT = 2;
@@ -82,21 +82,32 @@ final class ExVidPlayerImp implements HlsSampleSource.EventListener,ExVidPlayer 
     player.seekTo(duration);
   }
 
+  @Override public void addTrack(String url, String type) {
+    video_url.add(url);
+    video_type.add(type);
+  }
+
+  @Override public void removeTrack(int position) {
+      video_url.remove(position);
+      video_type.remove(position);
+  }
+
   @Override public void setAspectRatio(float ratio) {
     aspectRatioFrameLayout.setAspectRatio(ratio);
   }
 
-  public ExVidPlayerImp(Activity activity, SurfaceView surface, Handler handler,AspectRatioFrameLayout aspectRatioFrameLayout) {
+  public ExVidPlayerImp(Activity activity, SurfaceView surface, Handler handler,
+      AspectRatioFrameLayout aspectRatioFrameLayout) {
     this.activity = activity;
     this.surface = surface;
-    this.aspectRatioFrameLayout=aspectRatioFrameLayout;
+    this.aspectRatioFrameLayout = aspectRatioFrameLayout;
     this.mainHandler = handler;
   }
 
   public ExVidPlayerImp(Activity activity, SurfaceView surface, Handler handler) {
     this.activity = activity;
     this.surface = surface;
-    this.aspectRatioFrameLayout=aspectRatioFrameLayout;
+    this.aspectRatioFrameLayout = aspectRatioFrameLayout;
     this.mainHandler = handler;
   }
 
@@ -164,10 +175,11 @@ final class ExVidPlayerImp implements HlsSampleSource.EventListener,ExVidPlayer 
     }
   }
 
-  @Override public void setSource(ArrayList<String> url, ArrayList<String> vtype,int currentIndex) {
+  @Override
+  public void setSource(ArrayList<String> url, ArrayList<String> vtype, int currentIndex) {
     video_url = url;
     video_type = vtype;
-    currentTrackIndex=currentIndex;
+    currentTrackIndex = currentIndex;
     initPlayer();
   }
 
@@ -198,13 +210,13 @@ final class ExVidPlayerImp implements HlsSampleSource.EventListener,ExVidPlayer 
     for (int i = 0; i < player.getTrackCount(0); i++) {
       MediaFormat format = player.getTrackFormat(0, i);
       if (MimeTypes.isVideo(format.mimeType)) {
-        Log.e("dsa",format.bitrate+"");
+        Log.e("dsa", format.bitrate + "");
         if (format.adaptive) {
           menu.add(1, (i + 1), (i + 1), "Auto");
         } else {
 
           if (!formats.contains(format.bitrate)) {
-            menu.add(1, (i + 1), (i + 1), (format.bitrate)/1000 + " kbps");
+            menu.add(1, (i + 1), (i + 1), (format.bitrate) / 1000 + " kbps");
             formats.add(format.bitrate);
           }
         }
@@ -318,6 +330,5 @@ final class ExVidPlayerImp implements HlsSampleSource.EventListener,ExVidPlayer 
       long mediaTimeMs) {
 
   }
-
 }
 

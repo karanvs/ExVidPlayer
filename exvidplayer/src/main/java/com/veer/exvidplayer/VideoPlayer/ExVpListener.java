@@ -32,5 +32,9 @@ public interface ExVpListener {
 
   void changeQuality(View v);
 
+  void addTrack(String url,String type);
+
+  void removeTrack(int position);
+
   void seekToProgress(int progress);
 }

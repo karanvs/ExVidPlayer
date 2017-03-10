@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
@@ -124,6 +125,20 @@ public class ExVpFragment extends Fragment {
       }
     }
 
+    @Override public void addTrack(String url, String type) {
+      if(exVidPlayer!=null)
+      {
+        exVidPlayer.addTrack(url,type);
+      }
+    }
+
+    @Override public void removeTrack(int position) {
+      if(exVidPlayer!=null)
+      {
+        exVidPlayer.removeTrack(position);
+      }
+    }
+
     @Override public void seekToProgress(int progress) {
       if(exVidPlayer!=null)
       {
@@ -238,7 +253,11 @@ public class ExVpFragment extends Fragment {
       }
 
       @Override public void hideControls() {
-        if (root != null) root.setVisibility(View.GONE);
+        Log.e("contrl","ds");
+        if (root != null) {
+          Log.e("contrl","ds");
+          root.setVisibility(View.GONE);
+        }
       }
 
       @Override public void showControls() {

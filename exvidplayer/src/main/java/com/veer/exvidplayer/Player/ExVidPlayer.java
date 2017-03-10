@@ -9,7 +9,7 @@ import com.google.android.exoplayer.AspectRatioFrameLayout;
 import java.util.ArrayList;
 
 public interface ExVidPlayer {
-  void setSource(ArrayList<String> urls, ArrayList<String> vtype,int currentIndex);
+  void setSource(ArrayList<String> urls, ArrayList<String> vtype, int currentIndex);
 
   void reset();
 
@@ -45,6 +45,10 @@ public interface ExVidPlayer {
 
   void seekTo(long duration);
 
+  void addTrack(String url,String type);
+
+  void removeTrack(int position);
+
   void setAspectRatio(float ratio);
 
   public static final class Factory {
@@ -57,9 +61,9 @@ public interface ExVidPlayer {
       return new ExVidPlayerImp(actvity, surface, handler);
     }
 
-    public static ExVidPlayerImp newInstance(Activity actvity, SurfaceView surface,
-        Handler handler,AspectRatioFrameLayout aspectRatioFrameLayout) {
-      return new ExVidPlayerImp(actvity, surface, handler,aspectRatioFrameLayout);
+    public static ExVidPlayerImp newInstance(Activity actvity, SurfaceView surface, Handler handler,
+        AspectRatioFrameLayout aspectRatioFrameLayout) {
+      return new ExVidPlayerImp(actvity, surface, handler, aspectRatioFrameLayout);
     }
   }
 }
