@@ -34,6 +34,8 @@ public interface ExVpListener {
 
   void addTrack(String url,String type);
 
+  void setCurrent(int position);
+
   void removeTrack(int position);
 
   void seekToProgress(int progress);

@@ -13,6 +13,8 @@ public interface ExVidPlayer {
 
   void reset();
 
+  void setCurrentTrack(int position);
+
   void release();
 
   void setListener(ExVidPlayerListener listener);

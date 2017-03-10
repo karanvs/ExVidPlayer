@@ -187,6 +187,13 @@ final class ExVidPlayerImp implements HlsSampleSource.EventListener, ExVidPlayer
 
   }
 
+  @Override public void setCurrentTrack(int position) {
+    if(player!=null)
+    {
+      player.setSelectedTrack(TYPE_VIDEO,position);
+    }
+  }
+
   @Override public void release() {
     killPlayer();
   }

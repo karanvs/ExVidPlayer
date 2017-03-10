@@ -132,6 +132,13 @@ public class ExVpFragment extends Fragment {
       }
     }
 
+    @Override public void setCurrent(int position) {
+      if(exVidPlayer!=null)
+      {
+        exVidPlayer.setCurrentTrack(position);
+      }
+    }
+
     @Override public void removeTrack(int position) {
       if(exVidPlayer!=null)
       {
