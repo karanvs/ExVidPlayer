@@ -16,18 +16,30 @@ allprojects {
 *  Add dependency for library
 ```
 dependencies {
-	        compile 'com.github.karanvs:ExVidPlayer:v1.5'
+	        compile 'com.github.karanvs:ExVidPlayer:v2.8'
 	}
 ```
 
 ## Usage
+
+#  What's New
+
+* ExVpSimpleFragment
+
+On account of a case for simple video player without the need for brigtness and volume controls, this is the latest addition to exvidplayer, this fragment provides simple playback without controls. 
+
+
+* New methods added for ExVpListener for more control.
+
+
+
 
 # Add permissions to your manifest
 
 ```
 
   <uses-permission android:name="android.permission.INTERNET" />
-  <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+  <uses-permission android:name="android.permission.WRITE_SETTINGS" /> //this permission is not needed for ExSimpleVpFragment
 ```
 Settings permission will used for brightness controls, If you are using only ExVidPlayer, then you may skip it.
 This will work pre Marshmallow, however for Marshmallow and above, you will have to explicity demand permission at runtime.
@@ -151,12 +163,37 @@ exVpControls.setDurationText(tvTotal);
 ExVpListener has following events, you can call them on yout events.
 
 ```
-void play();
-void stop();
-void forward();
-void reverse();
-void nextTrack();
-void previousTrack();
+void setControlLayout(ViewGroup viewGroup);
+
+  void play();
+
+  void stop();
+
+  void forward();
+
+  void reverse();
+
+  void nextTrack();
+
+  void previousTrack();
+
+  void setProgressBar(SeekBar seekBar);
+
+  void setDurationText(TextView textView);
+
+  void setCurrentText(TextView te);
+
+  void changeQuality(View v);
+
+  void addTrack(String url,String type);
+
+  void setCurrent(int position);
+
+  boolean isPlaying();
+
+  void removeTrack(int position);
+
+  void seekToProgress(int progress);
 
 ```
 
