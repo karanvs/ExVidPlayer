@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.google.android.exoplayer.AspectRatioFrameLayout;
@@ -60,6 +61,8 @@ public class ExSimpleVpFragment extends Fragment {
   ArrayList<String> video_url,video_type;
   private int currentIndex=0;
   private Handler mainHandler;
+  private RelativeLayout rlReplay;
+  private ImageView ivReplay;
 
 
   public ExVpListener getExVpListener() {
@@ -229,6 +232,17 @@ public class ExSimpleVpFragment extends Fragment {
     volumeCenterText = (LinearLayout) getView(R.id.vol_center_text);*/
 
     aspectRatioFrameLayout=(AspectRatioFrameLayout)getView(R.id.video_frame);
+    rlReplay = (RelativeLayout) getView(R.id.rlReplay);
+    ivReplay = (ImageView) getView(R.id.replayEvent);
+    ivReplay.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View view) {
+        rlReplay.setVisibility(View.GONE);
+        if (exVidPlayer != null) {
+          exVidPlayer.seekTo(0);
+          exVidPlayer.play();
+        }
+      }
+    });
   }
 
   public View getView(int id) {
@@ -260,9 +274,7 @@ public class ExSimpleVpFragment extends Fragment {
       }
 
       @Override public void onCompletion() {
-        if (exVidPlayer != null) {
-          exVidPlayer.nextTrack();
-        }
+        rlReplay.setVisibility(View.VISIBLE);
       }
 
       @Override public void hideControls() {
