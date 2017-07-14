@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import com.google.android.exoplayer.AspectRatioFrameLayout;
@@ -57,10 +58,12 @@ public class ExVpFragment extends Fragment {
   private TextView tvVolumePercent;
   //playerevent listener
   private ExVidPlayerListener mPlayerListener;
-  ArrayList<String> video_url,video_type;
-  private int currentIndex=0;
+  ArrayList<String> video_url, video_type;
+  private int currentIndex = 0;
   private Handler mainHandler;
-
+  //rewind
+  private RelativeLayout rlReplay;
+  private ImageView ivReplay;
 
   public ExVpListener getExVpListener() {
     return exVpListener;
@@ -126,15 +129,13 @@ public class ExVpFragment extends Fragment {
     }
 
     @Override public void addTrack(String url, String type) {
-      if(exVidPlayer!=null)
-      {
-        exVidPlayer.addTrack(url,type);
+      if (exVidPlayer != null) {
+        exVidPlayer.addTrack(url, type);
       }
     }
 
     @Override public void setCurrent(int position) {
-      if(exVidPlayer!=null)
-      {
+      if (exVidPlayer != null) {
         exVidPlayer.setCurrentTrack(position);
       }
     }
@@ -142,19 +143,16 @@ public class ExVpFragment extends Fragment {
     @Override public boolean isPlaying() {
 
       return exVidPlayer.isPlaying();
-
     }
 
     @Override public void removeTrack(int position) {
-      if(exVidPlayer!=null)
-      {
+      if (exVidPlayer != null) {
         exVidPlayer.removeTrack(position);
       }
     }
 
     @Override public void seekToProgress(int progress) {
-      if(exVidPlayer!=null)
-      {
+      if (exVidPlayer != null) {
         exVidPlayer.seekTo(progress);
       }
     }
@@ -182,7 +180,7 @@ public class ExVpFragment extends Fragment {
   private void getVideoUrls() {
     video_url = getArguments().getStringArrayList("urls");
     video_type = getArguments().getStringArrayList("type");
-    currentIndex=getArguments().getInt("currentIndex");
+    currentIndex = getArguments().getInt("currentIndex");
   }
 
   private void setUpBrightness() {
@@ -191,9 +189,10 @@ public class ExVpFragment extends Fragment {
   }
 
   private void setExoPlayer() {
-    exVidPlayer = ExVidPlayer.Factory.newInstance(getActivity(), surfaceView, mainHandler,aspectRatioFrameLayout);
+    exVidPlayer = ExVidPlayer.Factory.newInstance(getActivity(), surfaceView, mainHandler,
+        aspectRatioFrameLayout);
     exVidPlayer.setListener(mPlayerListener);
-    exVidPlayer.setSource(video_url, video_type,currentIndex);
+    exVidPlayer.setSource(video_url, video_type, currentIndex);
   }
 
   @Override public void onStop() {
@@ -228,7 +227,19 @@ public class ExVpFragment extends Fragment {
     tvVolumePercent = (TextView) getView(R.id.vol_perc_center_text);
     volumeCenterText = (LinearLayout) getView(R.id.vol_center_text);
 
-    aspectRatioFrameLayout=(AspectRatioFrameLayout)getView(R.id.video_frame);
+    aspectRatioFrameLayout = (AspectRatioFrameLayout) getView(R.id.video_frame);
+
+    rlReplay = (RelativeLayout) getView(R.id.rlReplay);
+    ivReplay = (ImageView) getView(R.id.replayEvent);
+    ivReplay.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View view) {
+        rlReplay.setVisibility(View.GONE);
+        if (exVidPlayer != null) {
+          exVidPlayer.seekTo(0);
+          exVidPlayer.play();
+        }
+      }
+    });
   }
 
   public View getView(int id) {
@@ -260,15 +271,13 @@ public class ExVpFragment extends Fragment {
       }
 
       @Override public void onCompletion() {
-        if (exVidPlayer != null) {
-          exVidPlayer.nextTrack();
-        }
+        rlReplay.setVisibility(View.VISIBLE);
       }
 
       @Override public void hideControls() {
-        Log.e("contrl","ds");
+        Log.e("contrl", "ds");
         if (root != null) {
-          Log.e("contrl","ds");
+          Log.e("contrl", "ds");
           root.setVisibility(View.GONE);
         }
       }
@@ -456,6 +465,4 @@ public class ExVpFragment extends Fragment {
 
     return (int) progress;
   }
-
-
 }

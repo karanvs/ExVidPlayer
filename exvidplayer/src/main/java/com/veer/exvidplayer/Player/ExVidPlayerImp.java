@@ -285,6 +285,7 @@ final class ExVidPlayerImp implements HlsSampleSource.EventListener, ExVidPlayer
           mlistener.onBuffering(playerControl.getBufferPercentage() + "");
           break;
         case ExoPlayer.STATE_ENDED:
+          mlistener.onCompletion();
           break;
         case ExoPlayer.STATE_IDLE:
           break;
@@ -293,6 +294,7 @@ final class ExVidPlayerImp implements HlsSampleSource.EventListener, ExVidPlayer
           break;
         case ExoPlayer.STATE_READY:
           mlistener.onBufferingFinished();
+
           break;
         default:
           break;

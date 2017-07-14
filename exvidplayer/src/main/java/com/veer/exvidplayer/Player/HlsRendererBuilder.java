@@ -144,7 +144,6 @@ public class HlsRendererBuilder implements RendererBuilder {
       },-1);
       MediaCodecAudioTrackRenderer audioRenderer = new MediaCodecAudioTrackRenderer(sampleSource,
           MediaCodecSelector.DEFAULT);
-
       TrackRenderer[] renderers = new TrackRenderer[2];
       renderers[0] = videoRenderer;
       renderers[1] = audioRenderer;

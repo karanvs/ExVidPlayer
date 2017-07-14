@@ -23,6 +23,22 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:layout_gravity="center"/>
+
+      <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:id="@+id/rlReplay"
+          android:visibility="gone"
+          android:background="#90000000"
+          >
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/replayEvent"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_replay_white_24dp"
+            />
+      </RelativeLayout>
     </RelativeLayout>
   </com.google.android.exoplayer.AspectRatioFrameLayout>
 
